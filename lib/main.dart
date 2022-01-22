@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:expense_tracker/transactions.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(_MyApp());
@@ -16,6 +17,11 @@ class _MyApp extends StatelessWidget {
 }
 
 class _MyHomePage extends StatelessWidget {
+  convertDateTime(DateTime date) {
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    return formatter.format(date);
+  }
+
   final List<Transaction> transactions = [
     Transaction(
       id: 't1',
@@ -30,6 +36,15 @@ class _MyHomePage extends StatelessWidget {
       date: DateTime.now(),
     ),
   ];
+
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
+
+  handleNewTransaction() {
+    print('Button Clicked');
+    print(titleController.text);
+    print(amountController.text);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +65,31 @@ class _MyHomePage extends StatelessWidget {
                 child: Text("CHART"),
               ),
             ),
+            Card(
+                elevation: 5,
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    // ignore: prefer_const_literals_to_create_immutables
+                    children: [
+                      TextField(
+                        decoration: const InputDecoration(labelText: "Title"),
+                        controller: titleController,
+                      ),
+                      TextField(
+                        decoration: const InputDecoration(labelText: "Amount"),
+                        controller: amountController,
+                      ),
+                      TextButton(
+                          onPressed: handleNewTransaction,
+                          child: const Text("Add Transaction"),
+                          style: TextButton.styleFrom(
+                            textStyle: const TextStyle(color: Colors.purple),
+                          ))
+                    ],
+                  ),
+                )),
             Column(
               children: transactions.map((tx) {
                 return Card(
@@ -78,7 +118,7 @@ class _MyHomePage extends StatelessWidget {
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          tx.date.toString(),
+                          convertDateTime(tx.date),
                           style: const TextStyle(color: Colors.grey),
                         )
                       ],
