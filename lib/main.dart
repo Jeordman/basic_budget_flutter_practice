@@ -20,15 +20,15 @@ class _MyApp extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               // horizontal alignment
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Container(
+              children: const <Widget>[
+                SizedBox(
                   width: double.infinity,
-                  child: const Card(
+                  child: Card(
                     color: Colors.blue,
                     child: Text("CHART"),
                   ),
                 ),
-                const UserTransactions(),
+                UserTransactions(),
               ],
             ))));
   }
